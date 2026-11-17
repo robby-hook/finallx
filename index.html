@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram - Secure Growth Engine</title>
+    <meta name="description" content="Securely boost your Instagram presence.">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TWH89KMQ5V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TWH89KMQ5V');
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #7638FA; color: white; overflow-x: hidden; }
+
+        .bg-insta { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .text-insta { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .ig-input { background: #161616; border: 1px solid #262626; transition: border-color 0.2s; }
+        .ig-input:focus { border-color: #bc1888; outline: none; }
+        
+        .offer-card { transition: all 0.2s; }
+        .offer-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.5); border-color: #bc1888; }
+        
+        .modal-active-blur > *:not(#step-4-modal) { filter: blur(10px) brightness(0.4); pointer-events: none; transition: filter 0.4s ease; }
+
+        @keyframes slideUpFade {
+            0% { transform: translateY(20px); opacity: 0; }
+            10% { transform: translateY(0); opacity: 1; }
+            90% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-20px); opacity: 0; }
+        }
+        .toast-notification { animation: slideUpFade 4s ease-in-out forwards; }
+        
+        .counter-glow { text-shadow: 0 0 20px rgba(188, 24, 136, 0.8); }
+        .queue-glow { text-shadow: 0 0 20px rgba(239, 68, 68, 0.6); }
+        .success-glow { text-shadow: 0 0 30px rgba(39, 174, 96, 0.8); }
+        
+        .hidden-offer { display: none !important; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between relative transition-all" id="main-body">
+
+    <div id="toast-container" class="fixed bottom-6 left-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <nav class="p-4 border-b border-gray-900 bg-black/80 sticky top-0 z-40 backdrop-blur-md">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i data-lucide="instagram" class="w-8 h-8 text-[#bc1888]"></i>
+                <span class="text-2xl font-bold tracking-tight">Insta<span class="text-insta">Growth</span></span>
+            </div>
+            <div class="hidden md:flex items-center gap-4">
+                <span class="text-xs text-gray-400 font-bold flex items-center gap-1">
+                    <span class="relative flex h-2 w-2">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    SYSTEM <span class="text-green-500 uppercase tracking-widest text-[10px]">SECURE</span>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow flex flex-col items-center justify-center p-4 relative w-full max-w-6xl mx-auto mb-20 z-10">
+        
+        <div id="step-1" class="w-full max-w-md bg-[#0a0a0a] border border-[#1a1a1a] p-8 rounded-2xl shadow-2xl">
+            <div class="text-center mb-8">
+                <div class="inline-block bg-gradient-to-r from-[#f09433]/10 to-[#bc1888]/10 border border-[#bc1888]/30 text-white text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full mb-4 shadow-sm">
+                    Used by <span class="text-insta">2.1M creators</span> to boost growth
+                </div>
+                <h1 class="text-3xl font-black mb-1 text-white uppercase tracking-tighter">Sync Account</h1>
+                <p class="text-gray-500 text-[11px] font-bold uppercase tracking-widest mt-1">Instant followers • No password required</p>
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Instagram Handle</label>
+                    <div class="relative">
+                        <input type="text" id="username" placeholder="@username" class="ig-input w-full text-white px-4 py-3.5 rounded-xl text-md font-medium placeholder-gray-600">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Target Resource</label>
+                    <div class="grid grid-cols-3 gap-3">
+                        <button onclick="selectResource('Followers', this)" class="resource-btn w-full p-[2px] rounded-xl flex flex-col items-center justify-center transition-all bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] shadow-[0_0_15px_rgba(188,24,136,0.2)]">
+                            <div class="inner-btn w-full h-full bg-[#161616] rounded-[10px] py-3.5 flex flex-col items-center gap-1.5 font-bold text-[10px] uppercase text-white transition-colors">
+                                <i data-lucide="users" class="w-5 h-5"></i> Followers
+                            </div>
+                        </button>
+                        <button onclick="selectResource('Likes', this)" class="resource-btn w-full p-[2px] rounded-xl flex flex-col items-center justify-center transition-all bg-[#262626] hover:bg-[#333]">
+                            <div class="inner-btn w-full h-full bg-[#161616] rounded-[10px] py-3.5 flex flex-col items-center gap-1.5 font-bold text-[10px] uppercase text-gray-500 transition-colors">
+                                <i data-lucide="heart" class="w-5 h-5"></i> Likes
+                            </div>
+                        </button>
+                        <button onclick="selectResource('Views', this)" class="resource-btn w-full p-[2px] rounded-xl flex flex-col items-center justify-center transition-all bg-[#262626] hover:bg-[#333]">
+                            <div class="inner-btn w-full h-full bg-[#161616] rounded-[10px] py-3.5 flex flex-col items-center gap-1.5 font-bold text-[10px] uppercase text-gray-500 transition-colors">
+                                <i data-lucide="eye" class="w-5 h-5"></i> Views
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <button onclick="nextStep()" class="w-full mt-2 py-4 rounded-xl font-black text-lg uppercase tracking-widest text-white bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] hover:opacity-90 transition shadow-lg flex items-center justify-center gap-2">
+                    Continue &rarr;
+                </button>
+            </div>
+        </div>
+
+        <div id="step-2" class="hidden w-full max-w-4xl">
+            <div class="text-center mb-10">
+                <h2 class="text-4xl font-black uppercase tracking-tighter">Select <span id="resource-name-title" class="text-insta">Followers</span></h2>
+                <p class="text-gray-400 mt-2 text-sm font-bold bg-[#161616] inline-block px-4 py-1.5 rounded-full border border-gray-800">
+                    Target: <span id="display-user" class="text-white">@user</span>
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-[#0a0a0a] border border-[#262626] p-8 rounded-2xl text-center cursor-pointer hover:border-[#bc1888] transition group" onclick="startProcess(1000)">
+                    <h3 class="text-4xl font-black mb-1">1,000</h3>
+                    <p class="text-gray-500 text-[11px] uppercase tracking-widest font-black resource-label">Followers</p>
+                </div>
+
+                <div class="bg-[#0a0a0a] border-2 border-[#bc1888] shadow-[0_0_20px_rgba(188,24,136,0.15)] p-8 rounded-2xl text-center cursor-pointer relative group" onclick="startProcess(5000)">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-white text-black px-4 py-1 rounded-full text-[9px] font-black tracking-widest uppercase shadow-lg">Highest Success Rate</div>
+                    <h3 class="text-5xl font-black mb-1 text-white">5,000</h3>
+                    <p class="text-gray-400 text-[11px] uppercase tracking-widest font-black resource-label">Followers</p>
+                </div>
+
+                <div class="bg-[#0a0a0a] border border-[#262626] p-8 rounded-2xl text-center cursor-pointer hover:border-[#bc1888] transition group" onclick="startProcess(10000)">
+                    <h3 class="text-4xl font-black mb-1">10,000</h3>
+                    <p class="text-gray-500 text-[11px] uppercase tracking-widest font-black resource-label">Followers</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="step-3" class="hidden w-full max-w-lg text-center">
+            <div id="terminal-view">
+                <div class="relative w-20 h-20 mx-auto mb-6">
+                    <svg class="animate-spin w-20 h-20" viewBox="0 0 50 50">
+                        <circle cx="25" cy="25" r="20" fill="none" stroke="#262626" stroke-width="3"></circle>
+                        <path d="M25 5 A 20 20 0 0 1 45 25" fill="none" stroke="#bc1888" stroke-width="4" stroke-linecap="round"></path>
+                    </svg>
+                    <div class="absolute inset-0 flex items-center justify-center"><i data-lucide="cpu" class="w-6 h-6 text-gray-500"></i></div>
+                </div>
+                <h2 class="text-xl font-black mb-4 uppercase tracking-widest text-insta" id="process-status">Initializing...</h2>
+                <div id="logs" class="bg-[#0a0a0a] p-4 rounded-xl text-left font-mono text-[11px] text-green-500 h-40 overflow-hidden border border-[#262626] leading-relaxed shadow-inner"></div>
+                <div class="mt-6 w-full bg-[#161616] h-1.5 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="h-full bg-insta w-0 transition-all duration-300"></div>
+                </div>
+            </div>
+
+            <div id="counter-view" class="hidden">
+                <h2 class="text-2xl font-black mb-2 uppercase tracking-widest text-gray-400">Injecting Resources</h2>
+                <div class="text-7xl font-black text-white my-6 counter-glow" id="live-counter">0</div>
+                <p class="text-gray-500 font-bold uppercase tracking-widest text-xs"><span class="resource-label">Followers</span> Queued</p>
+            </div>
+            
+            <div id="queue-view" class="hidden">
+                <div class="relative w-16 h-16 mx-auto mb-4">
+                    <i data-lucide="alert-triangle" class="w-16 h-16 text-red-500"></i>
+                </div>
+                <h2 class="text-2xl font-black mb-2 uppercase tracking-widest text-red-500">High Demand Detected</h2>
+                <p class="text-gray-400 text-sm font-bold mb-6">Placing you in the secure verification queue...</p>
+                <div class="text-7xl font-black text-white my-6 queue-glow" id="queue-position">47</div>
+                <p class="text-gray-500 font-bold uppercase tracking-widest text-xs">Position in Queue</p>
+            </div>
+        </div>
+
+    </main>
+
+    <div id="step-4-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black/90 p-4">
+        <div class="w-full max-w-md bg-[#0a0a0a] rounded-2xl shadow-2xl border border-[#262626] p-6 sm:p-7 relative max-h-[95vh] overflow-y-auto">
+            
+            <div class="flex items-center gap-1.5 justify-center text-[10px] font-black uppercase tracking-widest text-gray-400 mb-3">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                </span>
+                <span id="live-users-count" class="text-white">1,842</span> users currently visiting
+            </div>
+
+            <div class="text-center mb-4">
+                <h2 class="text-2xl font-black text-white uppercase tracking-tighter mb-2 flex items-center justify-center gap-2">
+                    <i data-lucide="shield-check" class="w-6 h-6 text-insta"></i> Human Verification
+                </h2>
+
+                <div id="timer-container" class="bg-[#121212] border border-[#262626] rounded-lg p-2.5 flex justify-center items-center gap-2 transition-colors duration-300">
+                    <i data-lucide="timer" class="w-4 h-4 text-gray-400" id="timer-icon"></i>
+                    <span id="countdown-timer" class="text-sm font-black text-white tracking-widest">Verification session expires in 2:00</span>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-[#bc1888]/20 to-transparent border-l-4 border-[#bc1888] p-4 mb-5 text-left rounded-r-xl shadow-sm">
+                <h3 class="text-white font-black text-xs uppercase tracking-widest mb-1.5">Action Required</h3>
+                <p class="text-gray-300 text-xs font-bold leading-relaxed">Complete <span class="text-insta font-black text-sm">ONE</span> quick sign up below to instantly unlock your queued <span class="resource-label text-white lowercase">followers</span>.</p>
+            </div>
+
+            <div class="bg-[#121212] border border-[#1a1a1a] rounded-lg p-2.5 mb-5 flex items-center justify-center overflow-hidden h-9 relative">
+                <div id="mini-activity-feed" class="text-[10px] font-bold text-gray-400 w-full text-center flex items-center justify-center gap-1.5 absolute transition-all duration-500 transform translate-y-0 opacity-100">
+                    <i data-lucide="check-circle-2" class="w-3 h-3 text-green-500"></i> <span id="mini-activity-text">@mike_92 verified successfully</span>
+                </div>
+            </div>
+
+            <div class="mb-5 bg-[#121212] p-3 rounded-xl border border-[#1a1a1a]">
+                <div class="flex justify-between text-[10px] font-black uppercase mb-1.5 tracking-widest">
+                    <span class="text-gray-400 transition-colors duration-500" id="verification-progress-text">Step 1 of 2: Pending</span>
+                    <span class="text-insta font-bold" id="verification-progress-pct">72%</span>
+                </div>
+                <div class="w-full bg-[#0a0a0a] rounded-full h-2 border border-[#262626]">
+                    <div id="verification-progress-fill" class="bg-insta h-2 rounded-full relative transition-all duration-1000 ease-out" style="width: 72%">
+                        <div class="absolute right-0 top-0 bottom-0 w-4 bg-white/30 animate-pulse rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center flex-wrap gap-x-4 gap-y-2 mb-4">
+                <span class="flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-gray-400"><i data-lucide="lock" class="w-3 h-3 text-green-500"></i> Secure</span>
+                <span class="flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-gray-400"><i data-lucide="key-round" class="w-3 h-3 text-green-500"></i> No Password</span>
+                <span class="flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-gray-400"><i data-lucide="zap" class="w-3 h-3 text-green-500"></i> Instant Unlock</span>
+            </div>
+
+            <div id="offerContainer" class="mb-4">
+    <div id="signup-box" class="bg-[#121212] border border-[#262626] rounded-xl p-4 text-center transition-all">
+
+        <h3 class="text-sm font-black text-white uppercase tracking-widest mb-2">
+            Complete Verification
+        </h3>
+
+        <p class="text-[11px] text-gray-400 font-bold mb-4">
+            Click below & sign up to unlock your resources instantly
+        </p>
+
+        <button onclick="handleSignupClick(this)" 
+            class="w-full py-3 rounded-xl font-black text-sm uppercase tracking-widest 
+            bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] 
+            hover:opacity-90 transition flex items-center justify-center gap-2">
+
+            <span>Sign Up & Continue</span>
+        </button>
+
+    </div>
+</div>
+            
+            <button id="show-more-btn" onclick="showAllOffers()" class="w-full hidden flex-col items-center justify-center py-3 mb-2 border border-dashed border-[#262626] bg-[#121212] rounded-xl hover:bg-[#1a1a1a] hover:border-gray-600 transition-all group">
+                <span class="text-[11px] font-black text-gray-300 uppercase tracking-widest mb-0.5 group-hover:text-white transition-colors">Having Trouble?</span>
+                <span class="text-[9px] font-bold text-gray-500 uppercase tracking-wider flex items-center">Click to view easier alternative tasks <i data-lucide="chevron-down" class="w-3 h-3 ml-1 group-hover:translate-y-0.5 transition-transform"></i></span>
+            </button>
+
+            <div class="mt-4 flex items-center justify-center gap-2 opacity-50">
+                <i data-lucide="shield" class="w-3 h-3 text-gray-500"></i>
+                <span class="text-[8px] font-black uppercase tracking-widest text-gray-500">Powered by Secure Verification Network</span>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+
+        const API_USER = "1358";
+        const API_KEY = "ba3e23a46d31ddf85dfefe153b518f40";
+        const PROXY_URL = null; 
+        // -------------------------
+
+        lucide.createIcons();
+
+        let username = "";
+        let amount = 0;
+        let selectedResource = "Followers";
+        let offerClickedTime = 0; 
+
+        const mockNames = [
+            'Alex from Texas', 'Sarah from NY', 'Mike from UK', 
+            'Julia from CA', 'David from FL', 'Emma from AUS', 
+            'Chris from NY', 'Jessica from TX', 'Noah from UK', 'Liam from CA'
+        ];
+        const completionActions = ['just completed verification', 'unlocked followers', 'verified successfully', 'secured their account'];
+        
+        function initSocialProof() {
+            setInterval(() => {
+                const name = mockNames[Math.floor(Math.random() * mockNames.length)];
+                const action = completionActions[Math.floor(Math.random() * completionActions.length)];
+                
+                const toast = $(`
+                    <div class="toast-notification bg-[#0a0a0a] border border-[#262626] text-white text-[10px] px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 w-max">
+                        <i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 flex-shrink-0"></i>
+                        <span class="font-bold">${name} ${action}</span>
+                    </div>
+                `);
+                $('#toast-container').append(toast);
+                lucide.createIcons();
+                setTimeout(() => toast.remove(), 4000);
+            }, Math.floor(Math.random() * 4000) + 6000); 
+        }
+        initSocialProof();
+
+        function initMiniActivityFeed() {
+            const feedText = document.getElementById('mini-activity-text');
+            const feedContainer = document.getElementById('mini-activity-feed');
+            
+            setInterval(() => {
+                feedContainer.style.opacity = '0';
+                feedContainer.style.transform = 'translateY(-10px)';
+                
+                setTimeout(() => {
+                    const name = mockNames[Math.floor(Math.random() * mockNames.length)];
+                    const action = completionActions[Math.floor(Math.random() * completionActions.length)];
+                    feedText.innerText = `${name} ${action}`;
+                    
+                    feedContainer.style.transform = 'translateY(10px)';
+                    
+                    setTimeout(() => {
+                        feedContainer.style.opacity = '1';
+                        feedContainer.style.transform = 'translateY(0)';
+                    }, 50);
+                }, 500);
+                
+            }, 4000);
+        }
+
+        function initLiveUsers() {
+            const countEl = document.getElementById('live-users-count');
+            setInterval(() => {
+                const newCount = Math.floor(Math.random() * (2400 - 1200 + 1)) + 1200;
+                countEl.innerText = newCount.toLocaleString();
+            }, 20000); 
+        }
+
+        function selectResource(type, btn) {
+            selectedResource = type;
+            document.querySelectorAll('.resource-btn').forEach(b => {
+                b.className = "resource-btn w-full p-[2px] rounded-xl flex flex-col items-center justify-center transition-all bg-[#262626] hover:bg-[#333]";
+                b.querySelector('.inner-btn').className = "inner-btn w-full h-full bg-[#161616] rounded-[10px] py-3.5 flex flex-col items-center gap-1.5 font-bold text-[10px] uppercase text-gray-500 transition-colors";
+            });
+            btn.className = "resource-btn w-full p-[2px] rounded-xl flex flex-col items-center justify-center transition-all bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] shadow-[0_0_15px_rgba(188,24,136,0.2)]";
+            btn.querySelector('.inner-btn').className = "inner-btn w-full h-full bg-[#161616] rounded-[10px] py-3.5 flex flex-col items-center gap-1.5 font-bold text-[10px] uppercase text-white transition-colors";
+        }
+
+        function nextStep() {
+            const input = document.getElementById('username');
+            let val = input.value.trim();
+            if(!val.startsWith('@') && val.length > 0) val = '@' + val;
+            
+            if(val.length < 3) {
+                input.classList.add('border-red-500');
+                setTimeout(() => input.classList.remove('border-red-500'), 1000);
+                return;
+            }
+            username = val;
+            document.getElementById('display-user').innerText = username;
+            
+            document.getElementById('resource-name-title').innerText = selectedResource;
+            document.querySelectorAll('.resource-label').forEach(el => el.innerText = selectedResource);
+            
+            $("#step-1").fadeOut(250, () => $("#step-2").removeClass('hidden').hide().fadeIn(250));
+        }
+
+        function startProcess(selectedAmount) {
+            amount = selectedAmount;
+            $("#step-2").fadeOut(250, () => {
+                $("#step-3").removeClass('hidden').hide().fadeIn(250);
+                executeTerminalSequence();
+            });
+        }
+
+        async function executeTerminalSequence() {
+            const logs = document.getElementById('logs');
+            const bar = document.getElementById('progress-bar');
+            const status = document.getElementById('process-status');
+            
+            const messages = [
+                "Establishing AES-256 Encrypted Connection...",
+                "Pinging Instagram Graph API Nodes...",
+                `Locating Target Account: ${username}...`,
+                "Account Verified. Status: Public.",
+                "Initializing Content Injection Protocol...",
+                "Bypassing IG Velocity Limits & Spam Filters...",
+                "Generating secure proxies...",
+                `Allocating ${amount.toLocaleString()} ${selectedResource}...`,
+                "Synchronizing database records...",
+                "WARNING: Unusual traffic pattern detected.",
+                "Triggering Human Verification Gate..."
+            ];
+
+            let progress = 0;
+            for(let i=0; i<messages.length; i++) {
+                const div = document.createElement('div');
+                div.innerHTML = `<span class="opacity-50">[root@sec-node ~]$</span> ${messages[i]}`;
+                logs.appendChild(div);
+                logs.scrollTop = logs.scrollHeight;
+                
+                status.innerText = messages[i].includes("WARNING") ? "SECURITY ALERT" : "PROCESSING...";
+                if(messages[i].includes("WARNING")) status.classList.add('text-red-500');
+
+                progress += (100 / messages.length);
+                bar.style.width = `${Math.min(progress, 98)}%`;
+                
+                await new Promise(r => setTimeout(r, 600 + Math.random() * 600)); 
+            }
+
+            setTimeout(startFakeDelivery, 500);
+        }
+
+        function startFakeDelivery() {
+            $("#terminal-view").hide();
+            $("#counter-view").fadeIn(300);
+            
+            const counterEl = document.getElementById('live-counter');
+            let current = 0;
+            const target = amount;
+            const duration = 2500; 
+            const increment = target / (duration / 30);
+            
+            const counterInterval = setInterval(() => {
+                current += increment;
+                if(current >= target) {
+                    current = target;
+                    clearInterval(counterInterval);
+                    counterEl.innerText = Math.floor(current).toLocaleString();
+                    setTimeout(startQueueSystem, 800); 
+                } else {
+                    counterEl.innerText = Math.floor(current).toLocaleString();
+                }
+            }, 30);
+        }
+
+        function startQueueSystem() {
+            $("#counter-view").hide();
+            $("#queue-view").fadeIn(300);
+            
+            const queueEl = document.getElementById('queue-position');
+            const queueSteps = [47, 32, 18, 5, 1];
+            let step = 0;
+            
+            const queueInterval = setInterval(() => {
+                queueEl.innerText = queueSteps[step];
+                step++;
+                if(step >= queueSteps.length) {
+                    clearInterval(queueInterval);
+                    queueEl.innerText = "READY";
+                    queueEl.classList.add('text-green-500', 'success-glow');
+                    queueEl.classList.remove('text-white', 'queue-glow');
+                    
+                    setTimeout(showLockerModal, 1200);
+                }
+            }, 800);
+        }
+
+        function showLockerModal() {
+            document.getElementById('main-body').classList.add('modal-active-blur');
+            $("#step-4-modal").removeClass('hidden').hide().fadeIn(400);
+            initLiveUsers();
+            initMiniActivityFeed();
+            startSessionTimer();
+        }
+
+        function startSessionTimer() {
+            let time = 120; 
+            const display = document.getElementById('countdown-timer');
+            const container = document.getElementById('timer-container');
+            const icon = document.getElementById('timer-icon');
+            
+            const timer = setInterval(() => {
+                if (--time <= 0) {
+                    clearInterval(timer);
+                    display.innerText = "Session expired. Refresh required.";
+                    display.classList.remove('text-red-500');
+                    display.classList.add('text-white');
+                    container.classList.add('bg-red-900/40', 'border-red-500/50');
+                    icon.classList.replace('text-red-500', 'text-white');
+                    return;
+                }
+                
+                let minutes = parseInt(time / 60, 10);
+                let seconds = parseInt(time % 60, 10);
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                
+                display.innerText = `Verification session expires in ${minutes}:${seconds}`;
+                
+                if (time < 30) {
+                    display.classList.add('text-red-500');
+                    icon.classList.add('text-red-500');
+                    container.classList.add('border-red-500/30');
+                }
+            }, 1000);
+        }
+
+        async function loadAndProcessOffers() {
+            const tracking = `instagram_${selectedResource.toLowerCase()}`;
+            const feedUrl = PROXY_URL || `https://d5b3uz3fo8hn3.cloudfront.net/public/offers/feed.php?user_id=${API_USER}&api_key=${API_KEY}&s1=${tracking}&callback=?`;
+
+            const boostedOffersConfig = {
+                "US": ["15777", "17596", "8470", "18109", "15512", "17983", "18249", "216"], 
+                "GB": ["15514", "3356", "15514", "3109", "18030", "17091"],
+                "CA": ["17396", "508", "16368", "18949", "3482", "2883"], 
+                "AU": ["17397", "14219", "15513", "3221", "17088", "17910"] 
+            };
+
+            let userCountry = "US"; 
+            try {
+                const geoRes = await fetch('https://get.geojs.io/v1/ip/country.json');
+                const geoData = await geoRes.json();
+                if (geoData.country) userCountry = geoData.country;
+            } catch(e) { console.warn("GeoIP failed, defaulting to US"); }
+
+            let activeBoostedIds = boostedOffersConfig[userCountry] || [];
+
+            $.getJSON(feedUrl, function(data) {
+                let offers = Array.isArray(data) ? data : (data.offers || []);
+                
+                let validOffers = offers.filter(o => {
+                    let conv = (o.conversion || o.anchor || "").toLowerCase();
+                    let payout = parseFloat(o.payout || o.user_payout || 0);
+                    return !conv.includes("additional apps") && !conv.includes("purchase") && payout >= 0.15;
+                });
+                
+                if(validOffers.length < 3) validOffers = offers;
+
+                let boostedPool = validOffers.filter(o => activeBoostedIds.includes(String(o.offer_id || "")));
+                let networkPool = validOffers.filter(o => !activeBoostedIds.includes(String(o.offer_id || "")));
+
+                const shuffle = (array) => array.sort(() => Math.random() - 0.5);
+
+                function scoreOffer(o) {
+                    let score = parseFloat(o.epc || o.payout || o.user_payout || 0) * 10; 
+                    let conv = (o.conversion || o.anchor || "").toLowerCase();
+                    
+                    if(conv.includes("install") && conv.includes("open")) score += 50;
+                    if(conv.includes("free trial") || conv.includes("vpn")) score += 40;
+                    if(conv.includes("play")) score += 20;
+                    if(conv.includes("additional")) score -= 50;
+                    
+                    score += Math.random() * 5;
+
+                    return score;
+                }
+
+                networkPool.sort((a, b) => scoreOffer(b) - scoreOffer(a));
+                boostedPool = shuffle(boostedPool); 
+
+                let finalOffers = [];
+                if (activeBoostedIds.length > 0 && boostedPool.length > 0) {
+                    let selectedBoosted = boostedPool.slice(0, 3);
+                    let neededNetwork = 5 - selectedBoosted.length;
+                    let selectedNetwork = networkPool.slice(0, neededNetwork);
+                    finalOffers = [...selectedBoosted, ...selectedNetwork];
+                } else {
+                    finalOffers = networkPool.slice(0, 5);
+                }
+                
+                let html = '';
+                if(finalOffers.length > 0) {
+                    finalOffers.forEach((o, index) => {
+                        let visibilityClass = index < 2 ? "flex" : "flex hidden-offer";
+                        let iconSrc = o.network_icon || o.picture || "https://ui-avatars.com/api/?name=" + encodeURIComponent(o.anchor.charAt(0)) + "&background=1a1a1a&color=fff";
+                        
+                        let convText = (o.conversion || o.anchor || "").toLowerCase();
+                        let timeEst = "30 SECONDS"; 
+                        let iconName = "zap"; 
+                        
+                        if(convText.includes("install") || convText.includes("app") || convText.includes("vpn")) {
+                            timeEst = "1 MINUTE";
+                            iconName = "smartphone";
+                        } else if(convText.includes("survey") || convText.includes("register") || convText.includes("form")) {
+                            timeEst = "2 MINUTES";
+                            iconName = "timer";
+                        }
+                        
+                        let completionBadge = `<div class="text-[#27ae60] font-black text-[10px] uppercase px-2 py-1.5 bg-[#27ae60]/10 border border-[#27ae60]/20 rounded-md whitespace-nowrap flex items-center gap-1 shadow-sm"><i data-lucide="${iconName}" class="w-3.5 h-3.5"></i> ${timeEst}</div>`;
+
+                        if (index === 0) {
+                            html += `
+                            <div onclick="handleOfferClick(event, this, '${o.url}', '${o.anchor.replace(/'/g, "\\'")}', '${o.offer_id || index}', '${iconSrc}')" class="offer-item ${visibilityClass} flex-col mb-4 cursor-pointer group scale-[1.02] transform transition-all">
+                                <div class="bg-[#bc1888] text-white text-[9px] font-black uppercase tracking-widest text-center py-1 rounded-t-xl z-10 relative">🔥 RECOMMENDED (FASTEST)</div>
+                                <div class="flex items-center p-4 bg-[#1a1a1a] border-2 border-[#bc1888] rounded-b-xl shadow-[0_0_15px_rgba(188,24,136,0.3)] relative -mt-1">
+                                    <img src="${iconSrc}" class="w-12 h-12 rounded-lg mr-3 object-cover border border-[#333]" alt="App Icon" onerror="this.src='https://ui-avatars.com/api/?name=V&background=1a1a1a&color=fff'">
+                                    <div class="flex flex-col flex-grow pr-2">
+                                        <span class="text-xs font-bold text-white group-hover:text-insta transition-colors line-clamp-1">${o.anchor}</span>
+                                        <span class="text-[9px] font-bold text-gray-400 mt-0.5">Recommended for quickest unlock</span>
+                                    </div>
+                                    ${completionBadge}
+                                </div>
+                            </div>`;
+                        } else {
+                            html += `
+                            <div onclick="handleOfferClick(event, this, '${o.url}', '${o.anchor.replace(/'/g, "\\'")}', '${o.offer_id || index}', '${iconSrc}')" class="offer-item ${visibilityClass} items-center p-3 mb-3 bg-[#121212] border border-[#262626] rounded-xl cursor-pointer group transition-all hover:bg-[#1a1a1a] hover:border-gray-600">
+                                <img src="${iconSrc}" class="w-10 h-10 rounded-lg mr-3 object-cover border border-[#333]" alt="App Icon" onerror="this.src='https://ui-avatars.com/api/?name=V&background=1a1a1a&color=fff'">
+                                <div class="flex flex-col flex-grow pr-2">
+                                    <span class="text-xs font-bold text-gray-200 group-hover:text-white transition-colors line-clamp-1">${o.anchor}</span>
+                                </div>
+                                ${completionBadge}
+                            </div>`;
+                        }
+                    });
+                    
+                    if(finalOffers.length > 2) {
+                        document.getElementById('show-more-btn').classList.remove('hidden');
+                        document.getElementById('show-more-btn').classList.add('flex');
+                    }
+
+                } else {
+                    html = '<div class="text-center py-10 text-[10px] text-gray-500 font-bold uppercase">System syncing... Please try again later.</div>';
+                }
+                
+                $("#offerContainer").html(html);
+                lucide.createIcons();
+            }).fail(function() {
+                $("#offerContainer").html('<div class="text-center py-10 text-[10px] text-gray-500 font-bold uppercase">Connection error. Refresh required.</div>');
+            });
+        }
+
+        function showAllOffers() {
+            $('.hidden-offer').hide().removeClass('hidden-offer').fadeIn(400);
+            $('#show-more-btn').fadeOut(300);
+        }
+
+function handleSignupClick(btn) {
+    offerClickedTime = Date.now();
+
+    const progText = document.getElementById('verification-progress-text');
+    const progPct = document.getElementById('verification-progress-pct');
+    const progFill = document.getElementById('verification-progress-fill');
+
+    progText.innerText = "Step 1 of 2: Completed";
+    progText.classList.add('text-insta');
+    progPct.innerText = "90%";
+    progFill.style.width = "90%";
+
+    btn.innerHTML = `
+        <div class="flex items-center gap-2">
+            <div class="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
+            <span>Processing...</span>
+        </div>
+    `;
+
+    btn.disabled = true;
+
+    const box = document.getElementById("signup-box");
+
+    setTimeout(() => {
+        box.innerHTML = `
+            <div class="flex flex-col items-center justify-center py-4">
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="animate-spin h-5 w-5 border-2 border-yellow-500 border-t-transparent rounded-full"></div>
+                    <span class="text-xs font-black text-yellow-500 uppercase tracking-widest">
+                        Waiting for completion...
+                    </span>
+                </div>
+
+                <p class="text-[10px] text-gray-500 font-bold">
+                    Complete the signup in the opened page
+                </p>
+            </div>
+
+<button onclick="window.open('https://www.profitablecpmratenetwork.com/di7d1jab?key=ad0cdb02b4a8b87096d74f82095b9917','_blank')"
+    class="mt-3 px-4 py-2 text-[10px] font-black uppercase tracking-widest 
+    bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] 
+    rounded-lg text-white hover:opacity-90 transition">
+    Re-Open
+</button>
+        `;
+    }, 800);
+
+    window.open(
+        "https://www.profitablecpmratenetwork.com/di7d1jab?key=ad0cdb02b4a8b87096d74f82095b9917",
+        "_blank"
+    );
+}
+
+        function handleOfferClick(event, element, url, name, id, iconSrc) {
+            event.preventDefault();
+            
+            console.log(`[CPA TRACKING] Offer Clicked: ID=${id} | Name="${name}" | Time=${new Date().toISOString()}`);
+
+            offerClickedTime = Date.now();
+
+            const progText = document.getElementById('verification-progress-text');
+            const progPct = document.getElementById('verification-progress-pct');
+            const progFill = document.getElementById('verification-progress-fill');
+            
+            progText.innerText = "Step 1 of 2: Completed";
+            progText.classList.add('text-insta');
+            progText.classList.remove('text-gray-400');
+            progPct.innerText = "89%";
+            progFill.style.width = "89%";
+
+            let newTab = window.open('about:blank', '_blank');
+
+            element.innerHTML = `
+                <div class="flex items-center gap-2 justify-center w-full py-4">
+                    <div class="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
+                    <span class="text-xs font-bold text-white uppercase tracking-widest">Opening Secure Verification...</span>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                
+                element.classList.remove('hover:bg-[#1a1a1a]', 'hover:border-gray-600', 'cursor-pointer', 'scale-[1.02]');
+                element.classList.add('border-yellow-500/50', 'bg-[#1a1a1a]/50');
+                
+                element.innerHTML = `
+                    <div class="flex items-center p-3 w-full">
+                        <img src="${iconSrc}" class="w-10 h-10 rounded-lg mr-3 object-cover border border-[#333] opacity-50 grayscale" alt="App Icon" onerror="this.src='https://ui-avatars.com/api/?name=V&background=1a1a1a&color=fff'">
+                        <div class="flex flex-col flex-grow pr-2">
+                            <span class="text-xs font-bold text-gray-400 line-clamp-1 line-through decoration-gray-600">${name}</span>
+                            <span class="text-[9px] font-black text-yellow-500 mt-1 flex items-center gap-1.5 tracking-widest uppercase">
+                                <div class="animate-spin h-2.5 w-2.5 border-2 border-yellow-500 border-t-transparent rounded-full"></div>
+                                Awaiting Completion...
+                            </span>
+                        </div>
+                    </div>
+                `;
+                
+                if (newTab) {
+                    newTab.location.href = url; 
+                } else {
+                    window.location.href = url; 
+                }
+            }, 400);
+        }
+
+        
+        function triggerSuccessScreen() {
+            offerClickedTime = 0; 
+            
+            document.getElementById('verification-progress-fill').style.width = "100%";
+            document.getElementById('verification-progress-pct').innerText = "100%";
+            document.getElementById('verification-progress-text').innerText = "Step 2 of 2: Completed";
+            
+            setTimeout(() => {
+                document.getElementById('step-4-modal').innerHTML = `
+                    <div class="w-full max-w-md bg-[#0a0a0a] rounded-2xl p-8 text-center border border-green-500/50 shadow-[0_0_40px_rgba(39,174,96,0.3)] transform transition-all scale-105">
+                        <div class="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-5 relative">
+                            <div class="absolute inset-0 rounded-full border-4 border-green-500 border-t-transparent animate-spin"></div>
+                            <i data-lucide="check" class="w-10 h-10 text-green-500 z-10 relative"></i>
+                        </div>
+                        <h2 class="text-3xl font-black text-white uppercase mb-3 text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-600">Verification Complete</h2>
+                        <p class="text-gray-300 text-sm font-bold bg-[#121212] p-3 rounded-xl border border-[#262626]">
+                            <span class="text-insta font-black">${amount.toLocaleString()} ${selectedResource}</span> successfully delivered to <span class="text-white">@${username}</span>.
+                        </p>
+                    </div>
+                `;
+                lucide.createIcons();
+                setTimeout(() => window.location.href = "https://instagram.com", 3500);
+            }, 500);
+        }
+
+        function checkLeadStatus() {
+            $.getJSON(`https://d1y3y09sav47f5.cloudfront.net/public/external/check2.php?user_id=${API_USER}&api_key=${API_KEY}&testing=0&callback=?`,
+                function (leads) {
+                    if (leads.length > 0) {
+                        triggerSuccessScreen();
+                    }
+                }
+            );
+        }
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible' && offerClickedTime > 0) {
+                checkLeadStatus();
+            }
+        });
+
+        setInterval(() => {
+            if (offerClickedTime > 0) { 
+                checkLeadStatus();
+            }
+        }, 10000);
+        
+    </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"75291380c56a46b49f9d8b607761d82f","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+<script type="text/javascript">var _Hasync= _Hasync|| [];
+_Hasync.push(['Histats.start', '1,2978090,4,0,0,0,00010000']);
+_Hasync.push(['Histats.fasi', '1']);
+_Hasync.push(['Histats.track_hits', '']);
+(function() {
+var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+hs.src = ('//s10.histats.com/js15_as.js');
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+})();</script>
+<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?2978090&101" alt="free tracking" border="0"></a></noscript>
+
+</body>
+</html>
